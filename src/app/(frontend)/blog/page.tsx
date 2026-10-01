@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 
+import { ArticleCard } from '@/components/article/ArticleCard'
 import { getPosts } from '@/lib/catalog'
 
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export default async function BlogIndexPage() {
   const posts = await getPosts()
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 md:px-6 md:py-16">
+    <div className="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16">
       <header className="mb-10">
         <h1 className="font-display text-3xl font-semibold md:text-4xl">Blog</h1>
         <p className="text-muted-fore mt-2 leading-relaxed">
@@ -28,32 +28,16 @@ export default async function BlogIndexPage() {
           </p>
         </div>
       ) : (
-        <ul className="flex flex-col divide-y divide-border">
+        /*
+          Cards rather than a divided list, held to the same standard as the product
+          cards (FR-015). With the catalogue expanded to ~24 items, the blog needs to
+          look equally substantive - a plain list beside a card grid is exactly the
+          inconsistency this release exists to remove.
+        */
+        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <li key={post.id}>
-              <article className="flex flex-col gap-2 py-6">
-                <time
-                  className="text-muted-fore text-xs font-medium uppercase tracking-wide"
-                  dateTime={post.publishedAt}
-                >
-                  {new Date(post.publishedAt).toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  })}
-                </time>
-
-                <h2 className="font-display text-xl font-semibold leading-snug">
-                  <Link
-                    className="transition-colors hover:text-accent"
-                    href={`/blog/${post.slug}`}
-                  >
-                    {post.title}
-                  </Link>
-                </h2>
-
-                <p className="text-muted-fore leading-relaxed">{post.excerpt}</p>
-              </article>
+              <ArticleCard post={post} />
             </li>
           ))}
         </ul>

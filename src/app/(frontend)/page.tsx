@@ -133,14 +133,25 @@ export default async function HomePage() {
           </Link>
         </div>
 
+        {/*
+          Category panels use the shared card language - same radii, border and type as
+          the product cards - but stay visually subordinate (FR-016). They carry no
+          imagery and no hover lift, so the products below them remain the thing the
+          eye lands on. A sub-category list is retained inside each panel, because that
+          list is the reason this section exists rather than a decorative grid.
+        */}
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map(({ children, parent }) => (
             <div
               className="flex flex-col gap-3 rounded-xl border border-border bg-surface p-5"
               key={parent.id}
             >
-              <h3 className="font-display font-semibold">{parent.title}</h3>
-              <p className="text-muted-fore text-sm leading-relaxed">{parent.description}</p>
+              <div>
+                <h3 className="font-display text-sm font-semibold leading-snug">{parent.title}</h3>
+                <p className="text-muted-fore mt-1 text-xs leading-relaxed">
+                  {parent.description}
+                </p>
+              </div>
 
               <ul className="mt-1 flex flex-col gap-1 border-t border-border pt-3">
                 {children.map((child) => (
