@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" role="img" aria-label="Accounting, view 3 of 3">
+  <defs>
+    <linearGradient id="g33" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7F2E9"/>
+      <stop offset="100%" stop-color="#FFFFFF"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="1000" fill="url(#g33)"/>
+
+  <!-- Soft corner accents, echoing the card radius in the design -->
+  <rect x="0" y="0" width="800" height="14" fill="#C67B5C" opacity="0.85"/>
+
+  <!-- Generic device silhouette so the panel reads as a product photo slot -->
+  <g opacity="0.16" fill="none" stroke="#57534E" stroke-width="6">
+    <rect x="250" y="290" width="300" height="380" rx="18"/>
+    <line x1="290" y1="350" x2="510" y2="350"/>
+    <line x1="290" y1="410" x2="510" y2="410"/>
+    <line x1="290" y1="470" x2="460" y2="470"/>
+    <rect x="320" y="670" width="160" height="26" rx="13"/>
+  </g>
+
+  <text x="400" y="790" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="600" fill="#57534E">Accounting</text>
+  <text x="400" y="840" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" fill="#C67B5C">View 3 of 3</text>
+  <text x="400" y="900" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="18" fill="#57534E" opacity="0.6">Placeholder image</text>
+</svg>

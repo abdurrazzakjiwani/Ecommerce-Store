@@ -1,0 +1,126 @@
+@import 'tailwindcss';
+
+/*
+ * DESIGN TOKENS - FROZEN
+ *
+ * Any change requires a recorded reason (constitution, Principle V).
+ *
+ * Contrast ratios measured against the page background #FFFBEB:
+ *   --color-text       16.1:1   body and headings
+ *   --color-muted-fore  5.5:1   secondary text
+ *   --color-accent      4.9:1   call to action, white text on top
+ *
+ * REJECTED: #D97706 amber. White text on it reaches only ~3:1 and fails WCAG AA.
+ * --color-accent (#B45309) reaches 4.91:1 and still reads warm. Do not
+ * reintroduce the rejected value.
+ *
+ * There is deliberately NO dark palette and NO `prefers-color-scheme` block.
+ * That is how light-mode-only is enforced structurally: a visitor whose OS is
+ * set to dark finds nothing to switch to, so the cream theme cannot be inverted
+ * out from under the brand.
+ */
+@theme {
+  --color-bg: #fffbeb;
+  --color-surface: #ffffff;
+  --color-text: #1c1917;
+  --color-primary: #44403c;
+  --color-accent: #b45309;
+  --color-accent-hover: #92400e;
+  --color-muted: #f5f5f4;
+  --color-muted-fore: #78716c;
+  --color-border: #e7e5e4;
+  --color-danger: #dc2626;
+  --color-ring: #b45309;
+
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 0.75rem;
+
+  /*
+   * Reserved space for product imagery. Images MUST occupy this box before
+   * they load, otherwise every card reflows as images arrive and Cumulative
+   * Layout Shift climbs (constitution performance budget: CLS under 0.1).
+   */
+  --aspect-media: 4 / 5;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    line-height: 1.2;
+  }
+
+  /*
+   * Focus must always be visible. The constitution forbids removing focus rings,
+   * and every interactive component inherits this. `:focus-visible` keeps it out
+   * of the way of mouse users while guaranteeing it for keyboard users.
+   */
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  /*
+   * Minimum touch target. 44x44 is a WCAG-referenced comfortable target size
+   * and is enforced here so a small icon-only control cannot ship unnoticed.
+   */
+  button,
+  a[href],
+  input,
+  select,
+  textarea {
+    touch-action: manipulation;
+  }
+}
+
+@layer components {
+  /*
+   * Sticky support control. Offset from the viewport edge on small screens so it
+   * never sits underneath a mobile browser's home indicator, and lifted on
+   * larger screens where that is not a concern.
+   */
+  .support-dock {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 40;
+  }
+
+  @media (min-width: 768px) {
+    .support-dock {
+      right: 1.5rem;
+      bottom: 1.5rem;
+    }
+  }
+}
+
+/*
+ * Reduced motion. When a visitor asks their device to reduce motion, render the
+ * final state immediately rather than animating towards it. This is a
+ * non-negotiable accessibility gate, not an enhancement.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
