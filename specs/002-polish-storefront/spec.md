@@ -13,6 +13,23 @@ visible pause control; expand to roughly 24 products and 8 articles; keep the ex
 font pairing and refine its details; production domain is
 `yourecommercestore.vercel.app`.
 
+## Clarifications
+
+### Session 2026-10-01
+
+- Q: Where should images cycle automatically? → A: Item detail pages only. Catalogue
+  cards keep a manual carousel that does not advance on its own.
+- Q: How many images should cycle, and which ones? → A: Every image the item has, up to a
+  maximum of five. Any images beyond the fifth stay reachable as thumbnails rather than
+  being dropped.
+- Q: Which card types get the redesign? → A: Product cards and article cards are fully
+  redesigned. Category cards get light styling changes for consistency only, so they stay
+  visually subordinate to the products they sit above.
+- Q: What performance targets must this release hold? → A: Hold the thresholds already
+  baselined by the previous release: largest contentful paint at most 2.5 seconds, layout
+  shift at most 0.1, and responsiveness at most 200 milliseconds, measured on a
+  mid-range phone over a slow connection.
+
 ## User Scenarios & Testing *(mandatory)*
 
 This feature changes how the site **looks and presents itself**, not what it does. The
@@ -84,22 +101,23 @@ every card shows the same elements in the same order with nothing clipped or ove
 
 ### User Story 3 - Visitor sees item images cycling, and can stop them (Priority: P1)
 
-A visitor is looking at an item and wants to see more of its photographs without having to
-click anything. The images advance on their own. If the images are moving too fast, or the
-visitor simply does not want movement, they can stop them, and they stop automatically
-whenever they interact with the control.
+  A visitor is looking at an item and wants to see more of its photographs without having to
+  click anything. On the item's own page, the images advance on their own. If the images are
+  moving too fast, or the visitor simply does not want movement, they can stop them, and they
+  stop automatically whenever they interact with the control. Browsing the catalogue is not
+  affected: card images are shown but never move on their own.
 
 **Why this priority**: Automatic cycling shows more of each item without effort, which is
 the point of the request. It also carries a genuine accessibility obligation, and a
 visitor who cannot stop moving content is excluded from the site.
 
-**Independent Test**: Open an item with three or more images and confirm the images begin
+**Independent Test**: Open an item with two or more images and confirm the images begin
 cycling on their own, that a pause control is visible and works, and that the movement
 stops when the visitor hovers, tabs into, or otherwise interacts with the control.
 
 **Acceptance Scenarios**:
 
-1. **Given** an item has three or more images, **When** the visitor views the item page
+1. **Given** an item has two or more images, **When** the visitor views the item page
    without touching anything, **Then** the images begin advancing automatically within a
    few seconds.
 2. **Given** the images are cycling, **When** the visitor activates the pause control,
@@ -204,9 +222,12 @@ throughout matches the domain that is actually live.
 
 - An item has **exactly one** image: no cycling, and no pause control, because a single
   image has nothing to cycle through.
+- The visitor is **browsing the catalogue** with many cards visible at once: no card image
+  advances on its own, so a full page of results stays still and needs no per-card pause
+  control.
 - An item has **no** images: the item stays reachable, cycling and its controls are not
   rendered at all, and a clearly labelled placeholder is shown instead.
-- An item has **more than five** images: only the configured maximum is cycled, and the
+- An item has **more than five** images: only the first five are cycled, and the
   remainder remain reachable manually, so an over-full set cannot break the layout.
 - The visitor **reduces motion** at the operating-system level: no automatic cycling
   anywhere, and no decorative transitions, while every manual control still works.
@@ -281,7 +302,7 @@ throughout matches the domain that is actually live.
 - **FR-007**: Existing contact destinations MUST be unchanged by this release; only their
   presentation changes.
 
-**Product presentation**
+**Card presentation**
 
 - **FR-008**: Each item in the catalogue MUST be presented as a card containing, in a
   consistent order: imagery, category, availability, name, summary, price or quote status,
@@ -296,72 +317,80 @@ throughout matches the domain that is actually live.
 - **FR-013**: An item MUST remain fully reachable from its card, and the add-to-basket
   action MUST remain separately operable without triggering navigation.
 - **FR-014**: Minimum touch target sizes MUST be preserved across all card controls.
+- **FR-015**: Article cards MUST be redesigned to the same standard as product cards,
+  presenting, in a consistent order: imagery, category, publication date, title,
+  summary, and a read action. An article card MUST NOT display a price, a quotation
+  state, or an add-to-basket action.
+- **FR-016**: Category cards MUST receive consistency changes only, sharing the corner
+  radii, spacing and typography of the other cards, and MUST remain visually
+  subordinate to the product cards they sit above so that browsing categories does
+  not compete with individual products for attention.
 
 **Image cycling**
 
-- **FR-015**: An item with three or more images MUST begin cycling those images
-  automatically shortly after the page settles, without visitor action.
-- **FR-016**: Automatic cycling MUST offer a visible control that stops it, and a way to
+- **FR-017**: Automatic cycling MUST occur only on item detail pages; images on catalogue cards MUST NOT advance on their own. On an item detail page, an item with two or more images MUST begin cycling
+  every image it has, up to a maximum of five, shortly after the page settles and without visitor action.
+- **FR-018**: Automatic cycling MUST offer a visible control that stops it, and a way to
   resume it.
-- **FR-017**: Automatic cycling MUST NOT begin, and MUST NOT resume, when the visitor's
+- **FR-019**: Automatic cycling MUST NOT begin, and MUST NOT resume, when the visitor's
   device has asked for reduced motion.
-- **FR-018**: Automatic cycling MUST pause while the visitor's pointer is over the images
+- **FR-020**: Automatic cycling MUST pause while the visitor's pointer is over the images
   or their keyboard focus is within them.
-- **FR-019**: Once a visitor has paused cycling themselves, it MUST remain paused
+- **FR-021**: Once a visitor has paused cycling themselves, it MUST remain paused
   regardless of later pointer movement.
-- **FR-020**: The current position within the image set MUST be available to assistive
+- **FR-022**: The current position within the image set MUST be available to assistive
   technology in words, and MUST NOT be conveyed by colour or shape alone.
-- **FR-021**: An item with fewer than three images MUST NOT cycle, and MUST NOT display
+- **FR-023**: An item with fewer than three images MUST NOT cycle, and MUST NOT display
   cycling controls.
-- **FR-022**: An item with no images MUST remain reachable, MUST NOT display cycling
+- **FR-024**: An item with no images MUST remain reachable, MUST NOT display cycling
   controls, and MUST show a clearly labelled placeholder.
-- **FR-023**: When an item has more images than the supported maximum, the excess images
-  MUST remain reachable through manual controls.
-- **FR-024**: The area occupied by item imagery MUST be reserved before images load, so
+- **FR-025**: When an item has more than five images, the images beyond the fifth MUST remain
+  reachable through manual controls rather than being discarded.
+- **FR-026**: The area occupied by item imagery MUST be reserved before images load, so
   that cycling does not cause visible layout movement.
 
 **Readability**
 
-- **FR-025**: Prices, quantities and other figures that appear in more than one place MUST
+- **FR-027**: Prices, quantities and other figures that appear in more than one place MUST
   be rendered so that figures align in columns and do not shift as their values change.
-- **FR-026**: Heading levels MUST look consistent wherever they appear across the site, and
+- **FR-028**: Heading levels MUST look consistent wherever they appear across the site, and
   body text MUST always be rendered in the same face.
-- **FR-027**: Long headings MUST wrap without leaving an isolated short line, and body
+- **FR-029**: Long headings MUST wrap without leaving an isolated short line, and body
   paragraphs of differing lengths MUST be separated consistently.
-- **FR-028**: The existing font pairing MUST be retained. This release refines how it is
+- **FR-030**: The existing font pairing MUST be retained. This release refines how it is
   applied and must not introduce a new typeface.
 
 **Catalogue breadth**
 
-- **FR-029**: The catalogue MUST contain at least twenty-four items spanning at least
+- **FR-031**: The catalogue MUST contain at least twenty-four items spanning at least
   eight categories including sub-categories.
-- **FR-030**: All three price presentations MUST remain represented in the catalogue, so
+- **FR-032**: All three price presentations MUST remain represented in the catalogue, so
   the fixed, indicative and quote-only presentations all remain reviewable.
-- **FR-031**: At least one item MUST have no imagery, so that state is reviewable.
-- **FR-032**: Filtering by category, price and availability MUST continue to behave
+- **FR-033**: At least one item MUST have no imagery, so that state is reviewable.
+- **FR-034**: Filtering by category, price and availability MUST continue to behave
   correctly across the expanded catalogue, including returning sub-category items when a
   parent category is selected.
-- **FR-033**: Search MUST continue to match across item names, summaries and tags
+- **FR-035**: Search MUST continue to match across item names, summaries and tags
   spanning multiple categories.
-- **FR-034**: The article index MUST list at least eight published articles, each opening
+- **FR-036**: The article index MUST list at least eight published articles, each opening
   to a readable page, and unpublished articles MUST remain unreachable.
 
 **Live address correctness**
 
-- **FR-035**: Every address the site publishes about itself, including in machine-readable
+- **FR-037**: Every address the site publishes about itself, including in machine-readable
   address listings and crawler directives, MUST belong to the production domain that
   currently responds.
-- **FR-036**: No page served by the site MUST reference an address that no longer resolves.
-- **FR-037**: Shared item and article addresses MUST remain stable across this release.
+- **FR-038**: No page served by the site MUST reference an address that no longer resolves.
+- **FR-039**: Shared item and article addresses MUST remain stable across this release.
 
 **Preserved behaviour**
 
-- **FR-038**: Searching, filtering, the basket, quantity changes, the delivery form, the
+- **FR-040**: Searching, filtering, the basket, quantity changes, the delivery form, the
   checkout message, and the contact form MUST behave exactly as they did before this
   release.
-- **FR-039**: No visitor-supplied personal detail beyond what they already chose to send
+- **FR-041**: No visitor-supplied personal detail beyond what they already chose to send
   MUST be collected or stored by this release.
-- **FR-040**: The provisional business identity MUST remain obviously provisional, and no
+- **FR-042**: The provisional business identity MUST remain obviously provisional, and no
   new hardcoded business value may be introduced.
 
 ### Key Entities
@@ -391,7 +420,7 @@ throughout matches the domain that is actually live.
 - **SC-003**: A visitor using assistive technology hears a meaningful description of each
   WhatsApp action, with no control announced merely as "image".
 - **SC-004**: Item images begin cycling on their own within five seconds of an item page
-  settling, for every item with three or more images.
+  settling, for every item with two or more images.
 - **SC-005**: A visitor can stop and resume automatic cycling using only controls visible
   on screen, and no visitor can be shown moving content they have asked to stop.
 - **SC-006**: On a device set to reduce motion, zero automatic cycling occurs anywhere on
@@ -416,6 +445,11 @@ throughout matches the domain that is actually live.
   anywhere on the site.
 - **SC-015**: Every interactive control introduced or restyled retains a touch target of at
   least 44 by 44 pixels and full keyboard operability, with visible focus throughout.
+- **SC-016**: On a mid-range phone over a slow connection, the expanded catalogue and the item
+  pages that cycle imagery both hold largest contentful paint at or under 2.5 seconds, a
+  cumulative layout shift at or under 0.1, and interaction responsiveness at or under 200
+  milliseconds. Layout shift is measured specifically while a full page of cards loads, so
+  that reserving space for imagery is verified rather than assumed.
 
 ## Assumptions
 
