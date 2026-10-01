@@ -3,6 +3,8 @@
 Auto-generated from all feature plans. Last updated: 2026-10-01
 
 ## Active Technologies
+- TypeScript 5.9.3 (pinned; `latest` is 7.0.2, the native-compiler + Next.js 16.3.8, Payload 3.90.2, Tailwind CSS 4.3.3, Embla Carousel (002-polish-storefront)
+- N/A for this release. No database; content flows through the existing (002-polish-storefront)
 
 - TypeScript 5.9.3 on Node.js 24.16.x (24.x LTS) + Next.js 16.3.8, Payload 3.90.2, @payloadcms/next 3.90.2, @payloadcms/db-postgres 3.90.2, @payloadcms/storage-s3 3.90.2, @payloadcms/richtext-lexical 3.90.2, @payloadcms/email-resend 3.90.2, Tailwind CSS 4.3.3, Zustand 5.0.15, Embla Carousel React 8.6.0, Zod 4.6.5, react-hook-form 7.89.0, sharp 0.35.5, lucide-react (001-whatsapp-storefront)
 
@@ -39,6 +41,7 @@ TypeScript 5.9.3 on Node.js 24.16.x (24.x LTS): Follow standard conventions
 
 
 ## Recent Changes
+- 002-polish-storefront: Added TypeScript 5.9.3 (pinned; `latest` is 7.0.2, the native-compiler + Next.js 16.3.8, Payload 3.90.2, Tailwind CSS 4.3.3, Embla Carousel
 
 - 001-whatsapp-storefront: Added TypeScript 5.9.3 on Node.js 24.16.x (24.x LTS) + Next.js 16.3.8, Payload 3.90.2, @payloadcms/next 3.90.2, @payloadcms/db-postgres 3.90.2, @payloadcms/storage-s3 3.90.2, @payloadcms/richtext-lexical 3.90.2, @payloadcms/email-resend 3.90.2, Tailwind CSS 4.3.3, Zustand 5.0.15, Embla Carousel React 8.6.0, Zod 4.6.5, react-hook-form 7.89.0, sharp 0.35.5, lucide-react
 
