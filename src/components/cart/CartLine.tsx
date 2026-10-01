@@ -25,7 +25,7 @@ export function CartLine({ slug }: { slug: string }) {
         <p className="truncate text-sm font-medium">{item.title}</p>
 
         {priced ? (
-          <p className="text-muted-fore text-xs">{formatPKR(item.price ?? 0)} each</p>
+          <p className="text-muted-fore text-xs tabular" data-numeric>{formatPKR(item.price ?? 0)} each</p>
         ) : (
           <p className="text-xs font-medium text-accent">Request a quote</p>
         )}
@@ -41,7 +41,7 @@ export function CartLine({ slug }: { slug: string }) {
               <Minus aria-hidden="true" size={14} />
             </button>
 
-            <span aria-live="polite" className="w-8 text-center text-sm font-medium tabular-nums">
+            <span aria-live="polite" className="tabular-nums w-8 text-center text-sm font-medium">
               {item.qty}
             </span>
 
@@ -67,7 +67,7 @@ export function CartLine({ slug }: { slug: string }) {
       </div>
 
       {priced ? (
-        <p className="shrink-0 text-sm font-semibold tabular-nums">
+        <p className="tabular-nums shrink-0 text-sm font-semibold" data-numeric>
           {formatPKR((item.price ?? 0) * item.qty)}
         </p>
       ) : null}

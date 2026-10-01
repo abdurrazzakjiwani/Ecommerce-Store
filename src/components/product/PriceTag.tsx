@@ -18,14 +18,14 @@ export function PriceTag({
 }) {
   if (priceType === 'quote' || price === null) {
     return (
-      <p className={cn('font-display text-base font-semibold text-accent', className)}>
+      <p className={cn('font-display text-base font-semibold text-accent', className)} data-numeric>
         Request a quote
       </p>
     )
   }
 
   return (
-    <p className={cn('font-display text-base font-semibold', className)}>
+    <p className={cn('font-display text-base font-semibold', className)} data-numeric>
       {priceType === 'from' ? <span className="text-muted-fore text-sm font-normal">From </span> : null}
       {formatPKR(price)}
       {priceType === 'from' ? (

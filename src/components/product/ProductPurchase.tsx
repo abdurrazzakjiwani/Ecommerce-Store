@@ -37,7 +37,10 @@ export function ProductPurchase({ product }: { product: Product }) {
         {product.priceType === 'quote' || product.price === null ? (
           <p className="font-display text-xl font-semibold text-accent">Request a quote</p>
         ) : (
-          <p className="font-display text-2xl font-semibold">
+          // data-numeric applies tabular figures, so a price that changes as
+          // quantities are adjusted does not shift sideways and figures align in
+          // columns (FR-028, US4 scenario 1).
+          <p className="tabular-nums font-display text-2xl font-semibold" data-numeric>
             {product.priceType === 'from' ? (
               <span className="text-muted-fore text-base font-normal">From </span>
             ) : null}
@@ -68,7 +71,11 @@ export function ProductPurchase({ product }: { product: Product }) {
             >
               &minus;
             </button>
-            <span aria-live="polite" className="w-10 text-center font-medium tabular-nums">
+            <span
+              aria-live="polite"
+              className="tabular-nums w-10 text-center font-medium"
+              data-numeric
+            >
               {qty}
             </span>
             <button

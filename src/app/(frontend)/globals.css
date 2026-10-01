@@ -61,6 +61,53 @@
   --radius-card: 0.75rem;
 
   /*
+   * TYPE SCALE - added 2026-10-01, feature 002 (FR-025 to FR-030).
+   *
+   * The font pairing is unchanged and must stay: Space Grotesk for headings, DM Sans
+   * for body. This is a refinement of sizes, weights and spacing, not a new typeface.
+   * Both families are loaded once in layout.tsx and no others may be added.
+   *
+   * The scale is a fixed ratio rather than ad-hoc sizes, so the same heading level
+   * renders identically on every page - the requirement is consistency across pages,
+   * not merely that headings exist.
+   */
+  --text-display: 2.5rem;
+  --text-display--line-height: 1.1;
+  --text-display--letter-spacing: -0.02em;
+
+  --text-title: 1.875rem;
+  --text-title--line-height: 1.15;
+  --text-title--letter-spacing: -0.015em;
+
+  --text-heading: 1.25rem;
+  --text-heading--line-height: 1.25;
+  --text-heading--letter-spacing: -0.01em;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.06em;
+
+  /*
+   * Vertical rhythm. Paragraph spacing is a token rather than a margin on every
+   * paragraph, so spacing between blocks is identical regardless of how long the
+   * text is (FR-030, US4 scenario 3).
+   */
+  --spacing-paragraph: 1rem;
+  --spacing-section: 4rem;
+
+  /*
+   * Reading measure. Long lines are the most common cause of a page feeling dense
+   * rather than considered, so body text is capped at roughly 70 characters.
+   */
+  --measure-body: 68ch;
+
+  /*
    * Reserved space for product imagery. Images MUST occupy this box before
    * they load, otherwise every card reflows as images arrive and Cumulative
    * Layout Shift climbs (constitution performance budget: CLS under 0.1).
@@ -77,15 +124,97 @@
     background-color: var(--color-bg);
     color: var(--color-text);
     font-family: var(--font-sans);
-    line-height: 1.5;
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    /* Stops iOS Safari inflating text in landscape. */
+    text-size-adjust: 100%;
   }
 
+  /*
+   * TYPE SCALE, applied once here rather than per component (FR-025 to FR-027).
+   *
+   * Defining these in the base layer is what makes the same heading level look the
+   * same on every page. When each component set its own size, a h2 on the homepage
+   * and an h2 on a product page drifted apart, which is the inconsistency US4
+   * scenario 4 exists to prevent.
+   */
   h1,
   h2,
   h3,
   h4 {
     font-family: var(--font-display);
-    line-height: 1.2;
+    font-weight: 600;
+    /*
+     * Balance wrapped lines so a long heading does not leave a single-word orphan on
+     * the second line (FR-029, US4 scenario 2).
+     */
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: var(--text-display);
+    line-height: var(--text-display--line-height);
+    letter-spacing: var(--text-display--letter-spacing);
+  }
+
+  h2 {
+    font-size: var(--text-title);
+    line-height: var(--text-title--line-height);
+    letter-spacing: var(--text-title--letter-spacing);
+  }
+
+  h3,
+  h4 {
+    font-size: var(--text-heading);
+    line-height: var(--text-heading--line-height);
+    letter-spacing: var(--text-heading--letter-spacing);
+  }
+
+  /* Long words and URLs must not force a horizontal scrollbar. */
+  p,
+  li {
+    overflow-wrap: break-word;
+  }
+
+  /*
+   * Reading measure. Body prose is capped so lines stay scannable, but the cap is
+   * ignored on narrow viewports where it would leave lines far too short.
+   */
+  @media (min-width: 640px) {
+    .prose-measure {
+      max-width: var(--measure-body);
+    }
+  }
+
+  /*
+   * Tabular figures for anything numeric (FR-028, US4 scenario 1).
+   *
+   * This is the fix for digits shifting sideways. Proportional digits mean a "1" is
+   * narrower than a "0", so a price that changes from 9,900 to 10,000 visibly jitters
+   * and two prices side by side do not line up. Tabular figures give every digit the
+   * same advance width, so figures align in columns and a changing value does not move.
+   *
+   * Applied to the numeric elements specifically rather than to the whole body,
+   * because tabular figures in running prose look loose.
+   */
+  .tabular,
+  [data-numeric] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  /*
+   * Paragraph rhythm. The margin comes from a token so spacing is identical whether
+   * the preceding paragraph ran to one line or twelve (FR-030, US4 scenario 3).
+   * Consecutive paragraphs are spaced rather than indented, which reads better at
+   * this measure.
+   */
+  .prose-body > p {
+    margin-block: 0 var(--spacing-paragraph);
+  }
+
+  .prose-body > p:last-child {
+    margin-block-end: 0;
   }
 
   /*

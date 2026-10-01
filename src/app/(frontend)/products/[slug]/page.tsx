@@ -153,7 +153,14 @@ export default async function ProductPage({ params }: { params: Params }) {
       <section className="mt-14 grid gap-10 border-t border-border pt-10 lg:grid-cols-2">
         <div>
           <h2 className="font-display text-xl font-semibold">About this item</h2>
-          <div className="text-muted-fore mt-3 flex flex-col gap-3 leading-relaxed">
+          {/*
+            `prose-body` and `prose-measure` come from the base layer (FR-029, FR-030).
+            Paragraph spacing comes from a token rather than a gap on this container, so
+            a one-line paragraph and a twelve-line paragraph are separated identically.
+            The measure cap keeps lines scannable instead of running the full column
+            width.
+          */}
+          <div className="prose-body prose-measure text-muted-fore mt-3 leading-relaxed">
             {product.description.split('\n\n').map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}

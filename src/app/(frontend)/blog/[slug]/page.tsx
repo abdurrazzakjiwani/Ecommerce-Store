@@ -75,7 +75,12 @@ export default async function BlogPostPage({ params }: { params: Params }) {
         <ProductImage alt={post.title} className="mt-8 rounded-xl" src={post.coverImage} />
       ) : null}
 
-      <div className="mt-8 flex flex-col gap-4 leading-relaxed">
+      {/*
+        Article body, using the shared prose rules (FR-029, FR-030). Paragraph spacing
+        comes from the token in the base layer, so it is identical regardless of
+        paragraph length, and the measure cap keeps lines at a readable width.
+      */}
+      <div className="prose-body prose-measure mt-8 leading-relaxed">
         {post.body.split('\n\n').map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}

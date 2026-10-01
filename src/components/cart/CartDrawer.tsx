@@ -96,7 +96,9 @@ export function CartDrawer({ onClose, open }: { onClose: () => void; open: boole
           <div className="sticky bottom-0 flex flex-col gap-3 border-t border-border bg-bg p-4">
             <div className="flex items-baseline justify-between text-sm">
               <span className="text-muted-fore">Subtotal</span>
-              <span className="font-display text-lg font-semibold">{formatPKR(subtotal)}</span>
+              <span className="tabular-nums font-display text-lg font-semibold" data-numeric>
+                {formatPKR(subtotal)}
+              </span>
             </div>
 
             {/*
