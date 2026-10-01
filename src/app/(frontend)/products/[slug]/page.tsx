@@ -101,7 +101,23 @@ export default async function ProductPage({ params }: { params: Params }) {
       </Link>
 
       <div className="mt-6 grid gap-10 lg:grid-cols-2">
-        <ProductGallery alt={product.title} images={product.images} />
+        {/*
+          THE ONLY PLACE IN THE APPLICATION THAT OPTS INTO CYCLING (FR-015).
+
+          Cards deliberately do not, so a catalogue page cannot mount 24 concurrent
+          autoplaying carousels - which would mean 24 timers, 24 looping live-region
+          announcements, and 24 pause controls needed to satisfy WCAG 2.2.2.
+
+          `ProductGallery` defaults autoPlay to false for exactly this reason. If a
+          second call site ever needs motion, it must be a deliberate change carrying
+          the same justification, not an inherited default.
+        */}
+        <ProductGallery
+          alt={product.title}
+          autoPlay
+          images={product.images}
+          maxCycledImages={5}
+        />
 
         <div className="flex flex-col gap-5">
           <div>

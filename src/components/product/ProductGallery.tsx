@@ -162,14 +162,39 @@ export function ProductGallery({
   const cycledCount = Math.min(images.length, maxCycledImages)
   const overflowCount = images.length - cycledCount
 
+  /**
+   * The plugin bails out of initialisation when there is only one scroll snap, leaving
+   * its internal delay table unbuilt. Calling `play()` in that state throws rather
+   * than no-op, so every call is gated on there actually being somewhere to go.
+   *
+   * This is not only a test-environment concern: a single measured slide, or slides
+   * that fail to measure, produces the same state in a real browser.
+   */
+  const canCycle = useCallback(() => {
+    if (!emblaApi) return false
+    try {
+      return emblaApi.scrollSnapList().length > 1
+    } catch {
+      return false
+    }
+  }, [emblaApi])
+
   const startCycling = useCallback(() => {
     if (!emblaApi || !cyclingAllowed) return
     if (userPausedRef.current || reducedMotion) return
+    if (!canCycle()) return
     emblaApi.plugins().autoplay?.play()
-  }, [emblaApi, cyclingAllowed, reducedMotion])
+  }, [emblaApi, cyclingAllowed, reducedMotion, canCycle])
 
   const stopCycling = useCallback(() => {
-    emblaApi?.plugins().autoplay?.stop()
+    if (!emblaApi) return
+    // `stop` is safe even when the plugin never initialised, but guard anyway so a
+    // missing instance can never throw during teardown.
+    try {
+      emblaApi.plugins().autoplay?.stop()
+    } catch {
+      // Nothing to stop.
+    }
   }, [emblaApi])
 
 
@@ -228,9 +253,13 @@ export function ProductGallery({
             ref={emblaRef}
             role="region"
           >
-            <div className="flex touch-pan-y">
+            <div className="flex touch-pan-y" data-testid="track">
               {images.map((src, index) => (
-                <div className="min-w-0 flex-[0_0_100%]" key={`${src}-${index}`}>
+                <div
+                  className="min-w-0 flex-[0_0_100%]"
+                  data-testid="slide"
+                  key={`${src}-${index}`}
+                >
                   <ProductImage
                     alt={`${alt}, image ${index + 1} of ${images.length}`}
                     src={src}
