@@ -32,6 +32,29 @@
   --color-danger: #dc2626;
   --color-ring: #b45309;
 
+  /*
+   * WHATSAPP BRAND TOKENS - added 2026-10-01, feature 002.
+   *
+   * Measured, not assumed. See specs/002-polish-storefront/research.md D2 and
+   * src/lib/contrast.ts. The guard is src/tests/contrast.test.ts.
+   *
+   *   --color-whatsapp      on #FFFBEB cream   1.91:1  FAILS
+   *   --color-whatsapp      on #075E54 teal    3.87:1  passes UI threshold
+   *   white text on #075E54 teal             7.67:1  passes AA normal text
+   *
+   * CONTRACT: --color-whatsapp is the mark's fill and nothing else. Meta's brand
+   * guidelines forbid recolouring the mark, so this value cannot be darkened to
+   * improve contrast. Because it measures 1.91:1 on cream, the mark must NEVER be
+   * placed directly on the page background - always pair it with white or teal.
+   *
+   * --color-whatsapp-deep is the only legal background for a control bearing the
+   * mark. Both values are brand assets, not business identity, so they are code
+   * constants rather than site-settings fields: exposing them in the admin panel
+   * would let the merchant recolour a mark the guidelines forbid changing.
+   */
+  --color-whatsapp: #25d366;
+  --color-whatsapp-deep: #075e54;
+
   --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
 

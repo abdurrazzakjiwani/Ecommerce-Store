@@ -1,4 +1,6 @@
-import { ArrowRight, CheckCircle2, MessageCircle, Package, ShieldCheck } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Package, ShieldCheck, UserRound } from 'lucide-react'
+
+import { WhatsAppIcon } from '@/components/brand/WhatsAppIcon'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
@@ -28,7 +30,7 @@ const TRUST = [
   },
   {
     body: 'Every enquiry is answered by a person, usually the same one who will do the work.',
-    Icon: MessageCircle,
+    Icon: UserRound,
     title: 'You talk to us',
   },
   {
@@ -77,9 +79,9 @@ export default async function HomePage() {
                   `Hello ${settings.businessName}, I would like to ask about your services.`,
                 )}
                 size="lg"
-                variant="secondary"
+                variant="whatsapp"
               >
-                <MessageCircle aria-hidden="true" size={18} />
+                <WhatsAppIcon size={20} />
                 Ask on WhatsApp
               </ButtonExternal>
             </div>

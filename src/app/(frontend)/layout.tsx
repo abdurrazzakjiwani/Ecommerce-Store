@@ -5,6 +5,7 @@ import { Footer } from '@/components/layout/Footer'
 import { SiteSettingsProvider } from '@/components/layout/SiteSettingsProvider'
 import { StorefrontShell } from '@/components/layout/StorefrontShell'
 import { WhatsAppButton } from '@/components/layout/WhatsAppButton'
+import { WhatsAppFab } from '@/components/layout/WhatsAppFab'
 import { getSiteSettings } from '@/lib/catalog'
 
 import './globals.css'
@@ -58,7 +59,18 @@ export default async function FrontendLayout({ children }: { children: React.Rea
           </StorefrontShell>
 
           <Footer settings={settings} />
-          <WhatsAppButton />
+          {/*
+        One WhatsApp action, sized for the viewport: a labelled button where there is
+        room for the label, and the standalone mark on a phone where a label would
+        crowd the edge. Both render the official mark on a legal background - see
+        WhatsAppButton and WhatsAppFab for the measured contrast reasoning.
+      */}
+      <div className="sm:hidden">
+        <WhatsAppFab />
+      </div>
+      <div className="hidden sm:block">
+        <WhatsAppButton />
+      </div>
         </SiteSettingsProvider>
       </body>
     </html>

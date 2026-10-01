@@ -1,4 +1,6 @@
-import { Mail, MessageCircle, Phone } from 'lucide-react'
+import { Mail, Phone } from 'lucide-react'
+
+import { WhatsAppIcon } from '@/components/brand/WhatsAppIcon'
 import type { Metadata } from 'next'
 
 import { ContactForm } from '@/components/contact/ContactForm'
@@ -43,7 +45,7 @@ export default async function ContactPage() {
                 `Hello ${settings.businessName}, I have an enquiry.`,
               )}
             >
-              <MessageCircle aria-hidden="true" size={18} />
+              <WhatsAppIcon size={20} />
               Message on WhatsApp
             </ButtonExternal>
           </div>

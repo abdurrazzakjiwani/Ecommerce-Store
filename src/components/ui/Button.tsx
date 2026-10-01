@@ -3,7 +3,7 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'reac
 
 import { cn } from '@/lib/cn'
 
-type Variant = 'primary' | 'secondary' | 'ghost'
+type Variant = 'primary' | 'secondary' | 'ghost' | 'whatsapp'
 type Size = 'md' | 'lg'
 
 const VARIANTS: Record<Variant, string> = {
@@ -11,6 +11,15 @@ const VARIANTS: Record<Variant, string> = {
   primary: 'bg-accent text-white hover:bg-accent-hover',
   secondary: 'bg-surface text-text border border-border hover:border-accent',
   ghost: 'text-text hover:bg-muted',
+  /*
+   * WhatsApp actions only. Teal rather than brand green, because the mark beside it
+   * is the official glyph and Meta forbids recolouring it, so the background has to
+   * carry the contrast instead. Measured: unmodified brand-green mark 3.87:1, white
+   * label 7.67:1. The two obvious alternatives fail - white on brand green is
+   * 1.98:1, and brand green on cream is 1.91:1. See research.md D2 and
+   * src/tests/contrast.test.ts.
+   */
+  whatsapp: 'bg-whatsapp-deep text-white hover:bg-whatsapp',
 }
 
 const SIZES: Record<Size, string> = {

@@ -1,6 +1,8 @@
 'use client'
 
-import { Check, MessageCircle, ShoppingBag } from 'lucide-react'
+import { Check, ShoppingBag } from 'lucide-react'
+
+import { WhatsAppIcon } from '@/components/brand/WhatsAppIcon'
 import { useState } from 'react'
 
 import { Badge } from '@/components/ui/Badge'
@@ -94,8 +96,8 @@ export function ProductPurchase({ product }: { product: Product }) {
           {added ? 'Added to basket' : 'Add to basket'}
         </Button>
 
-        <ButtonExternal href={waHref} size="lg" variant="secondary">
-          <MessageCircle aria-hidden="true" size={18} />
+        <ButtonExternal href={waHref} size="lg" variant="whatsapp">
+          <WhatsAppIcon size={20} />
           Enquire on WhatsApp
         </ButtonExternal>
 

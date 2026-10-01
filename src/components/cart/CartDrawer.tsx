@@ -1,6 +1,8 @@
 'use client'
 
-import { ArrowLeft, MessageCircle, ShoppingBag } from 'lucide-react'
+import { ArrowLeft, ShoppingBag } from 'lucide-react'
+
+import { WhatsAppIcon } from '@/components/brand/WhatsAppIcon'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -184,7 +186,7 @@ export function CartDrawer({ onClose, open }: { onClose: () => void; open: boole
               onClick={sendToWhatsApp}
               size="lg"
             >
-              <MessageCircle aria-hidden="true" size={18} />
+              <WhatsAppIcon size={20} />
               Send enquiry on WhatsApp
             </Button>
 
