@@ -1,10 +1,13 @@
 import type { MetadataRoute } from 'next'
 
 import { getPosts, getProducts } from '@/lib/catalog'
+import { productionOrigin } from '@/lib/origin'
 
 /** Covers every public route so search engines can discover the catalogue. */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = (process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000').replace(/\/$/, '')
+  // Throws in a production build if the origin would be localhost or the deleted
+  // domain. See `lib/origin.ts` for why a green build alone is not evidence.
+  const base = productionOrigin()
 
   const [products, posts] = await Promise.all([getProducts(), getPosts()])
 

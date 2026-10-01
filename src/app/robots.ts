@@ -1,7 +1,12 @@
 import type { MetadataRoute } from 'next'
 
+import { productionOrigin } from '@/lib/origin'
+
 export default function robots(): MetadataRoute.Robots {
-  const base = (process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000').replace(/\/$/, '')
+  // Same guard as the sitemap. Both routes previously fell back to localhost when
+  // NEXT_PUBLIC_SERVER_URL was unset, which is how a live site came to advertise an
+  // address that could not serve it. See `lib/origin.ts`.
+  const base = productionOrigin()
 
   return {
     rules: [
