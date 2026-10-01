@@ -19,7 +19,11 @@ const VARIANTS: Record<Variant, string> = {
    * 1.98:1, and brand green on cream is 1.91:1. See research.md D2 and
    * src/tests/contrast.test.ts.
    */
-  whatsapp: 'bg-whatsapp-deep text-white hover:bg-whatsapp',
+  // Hover darkens rather than brightens. Hovering to brand green is the trap here:
+  // white on #25D366 measures 1.98:1 and the green mark on green is 1:1, so the mark
+  // would disappear and the label would fail contrast on exactly the state a visitor
+  // enters deliberately. A slightly darker teal keeps both legal.
+  whatsapp: 'bg-whatsapp-deep text-white hover:bg-[#053f3a]',
 }
 
 const SIZES: Record<Size, string> = {

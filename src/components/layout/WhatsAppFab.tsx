@@ -34,7 +34,17 @@ export function WhatsAppFab() {
     <div className="support-dock">
       <a
         aria-label={`Chat with ${settings.businessName} on WhatsApp`}
-        className="flex size-14 cursor-pointer items-center justify-center rounded-full border-2 border-whatsapp-deep bg-surface shadow-lg transition-transform duration-200 hover:scale-[1.04] motion-reduce:transition-none motion-reduce:hover:scale-100"
+        /*
+          The field is NOT plain white. Measured, brand green on white is 1.98:1 and
+          fails the 3:1 threshold for a non-text icon, so a white circle would leave the
+          mark illegible. A near-white field lifts it to 2.1:1 - still short.
+
+          Therefore the mark sits on the deep teal, matching the labelled button, where
+          it measures 3.87:1. The white inner ring gives the control a light edge
+          against the cream page so the circular shape reads, without ever putting the
+          green mark on a light background.
+        */
+        className="flex size-14 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-whatsapp-deep shadow-lg transition-transform duration-200 hover:scale-[1.04] motion-reduce:transition-none motion-reduce:hover:scale-100"
         href={href}
         rel="noopener noreferrer"
         target="_blank"

@@ -1,5 +1,3 @@
-import type { MetadataRoute } from 'next'
-
 /**
  * Resolves the origin this site should advertise for itself, and refuses to build if
  * that answer would be wrong in production.

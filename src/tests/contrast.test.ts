@@ -49,6 +49,76 @@ describe('relativeLuminance', () => {
   })
 })
 
+/**
+ * Every treatment the site actually emits.
+ *
+ * The list is exhaustive on purpose. Measuring only the resting state once missed two
+ * real failures: a hover state that turned the button brand green, where white text
+ * fell to 1.98:1 and the green mark on green measured exactly 1:1; and a floating mark
+ * on a white field at 1.98:1. Both looked reasonable and both failed.
+ *
+ * Values recomputed with `contrastRatio` rather than hardcoded, so a token change
+ * surfaces here instead of shipping.
+ */
+describe('emitted WhatsApp treatments', () => {
+  /** Deep teal, the control background. */
+  const TEAL = '#075E54'
+  /** Darker teal, the button hover state. */
+  const TEAL_HOVER = '#053F3A'
+  /** Brand green, the mark. Never a background. */
+  const GREEN = '#25D366'
+  const WHITE = '#FFFFFF'
+  const CREAM = '#FFFBEB'
+
+  it('label text passes AA on the teal resting background', () => {
+    expect(contrastRatio(WHITE, TEAL)).toBeGreaterThanOrEqual(4.5)
+  })
+
+  it('label text passes AA on the teal hover background', () => {
+    // Hovering to brand green was the bug: white on green is 1.98:1.
+    expect(contrastRatio(WHITE, TEAL_HOVER)).toBeGreaterThanOrEqual(4.5)
+  })
+
+  it('the mark passes the UI threshold on the teal resting background', () => {
+    expect(contrastRatio(GREEN, TEAL)).toBeGreaterThanOrEqual(3)
+  })
+
+  it('the mark passes the UI threshold on the teal hover background', () => {
+    expect(contrastRatio(GREEN, TEAL_HOVER)).toBeGreaterThanOrEqual(3)
+  })
+
+  it('the mark is never placed on white, which measures 1.98:1', () => {
+    // Documents WHY the floating mark uses a teal field with a white ring rather than a
+    // white circle: there is no legal white background for an unmodified green mark.
+    expect(contrastRatio(GREEN, WHITE)).toBeLessThan(3)
+  })
+
+  it('the mark is never placed on the cream page, which measures 1.91:1', () => {
+    expect(contrastRatio(GREEN, CREAM)).toBeLessThan(3)
+  })
+
+  it('the mark on a dark teal ring is far from invisible', () => {
+    // The bug this replaced: green on green measured exactly 1:1.
+    expect(contrastRatio(GREEN, GREEN)).toBe(1)
+  })
+
+  it('every emitted combination is either AA or UI, never a failure', () => {
+    const emitted: Array<[string, string, string, number]> = [
+      ['label on teal', WHITE, TEAL, 4.5],
+      ['label on teal hover', WHITE, TEAL_HOVER, 4.5],
+      ['mark on teal', GREEN, TEAL, 3],
+      ['mark on teal hover', GREEN, TEAL_HOVER, 3],
+    ]
+
+    for (const [name, foreground, background, threshold] of emitted) {
+      expect(
+        contrastRatio(foreground, background),
+        `${name}: #${foreground} on #${background}`,
+      ).toBeGreaterThanOrEqual(threshold)
+    }
+  })
+})
+
 describe('contrastRatio', () => {
   it('returns exactly 1 for identical colours', () => {
     expect(contrastRatio('#FFFBEB', '#FFFBEB')).toBeCloseTo(1, 5)
