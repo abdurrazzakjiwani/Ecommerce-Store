@@ -1,0 +1,23 @@
+# Files that must never reach the deployment bundle.
+# node_modules and .git are excluded by Vercel automatically.
+
+# Build artefacts Vercel regenerates
+.next
+out
+tsconfig.tsbuildinfo
+
+# Source control and agent config
+.git
+.gitignore
+.opencode
+.specify
+
+# Never deploy secrets. .env.example is safe and is kept - it documents every
+# required variable and contains no real values.
+.env
+.env.*
+!.env.example
+
+# Local logs
+*.log
+npm-debug.log*
