@@ -26,13 +26,13 @@ All paths are absolute from repo root `D:\Abdur Razzak Jiwani Docs\ecommerce_web
 
 **Purpose**: the one new dependency, and the two pure functions that make the brand decision testable.
 
-- [ ] T001 Install `embla-carousel-autoplay@8.6.0` pinned exactly in package.json and verify `npm.cmd ls embla-carousel embla-carousel-autoplay embla-carousel-react` reports 8.6.0 for all three — the plugin's peerDependency is an exact version, not a range (research.md D3)
-- [ ] T002 [P] Create `src/lib/contrast.ts` with `relativeLuminance(hex: string): number` and `contrastRatio(fg: string, bg: string): number` using the WCAG 2.x formula; accept 3- and 6-digit hex with or without `#`, and throw on invalid input rather than returning a plausible wrong number
-- [ ] T003 [P] Write `src/tests/contrast.test.ts` asserting the measured values from research.md D2: `#25D366` on `#FFFBEB` = 1.91, `#25D366` on `#075E54` = 3.87, `#FFFFFF` on `#075E54` = 7.67, plus identical-colour = 1 and invalid hex throws. **Must fail before T002.**
-- [ ] T004 [P] Create `src/lib/motion.ts` exposing `prefersReducedMotion(): boolean` reading the `prefers-reduced-motion: reduce` media query, SSR-safe (no `window` access during render)
-- [ ] T005 [P] Write `src/tests/motion.test.ts` asserting the media query is read and that a missing API returns `false` rather than throwing. **Must fail before T004.**
-- [ ] T006 Record the two brand tokens in `src/app/(frontend)/globals.css` as `--color-whatsapp: #25D366` and `--color-whatsapp-deep: #075E54`, with a comment recording that the first is for the mark's fill only and measures 1.91:1 on cream, so it must never be a background. Do not touch the frozen accent `#B45309` or rejected `#D97706`
-- [ ] T007 Verify the frozen accent `#B45309` (4.91:1) and all other existing tokens are unchanged in `src/app/(frontend)/globals.css` — constitution freezes the token set
+- [x] T001 Install `embla-carousel-autoplay@8.6.0` pinned exactly in package.json and verify `npm.cmd ls embla-carousel embla-carousel-autoplay embla-carousel-react` reports 8.6.0 for all three — the plugin's peerDependency is an exact version, not a range (research.md D3)
+- [x] T002 [P] Create `src/lib/contrast.ts` with `relativeLuminance(hex: string): number` and `contrastRatio(fg: string, bg: string): number` using the WCAG 2.x formula; accept 3- and 6-digit hex with or without `#`, and throw on invalid input rather than returning a plausible wrong number
+- [x] T003 [P] Write `src/tests/contrast.test.ts` asserting the measured values from research.md D2: `#25D366` on `#FFFBEB` = 1.91, `#25D366` on `#075E54` = 3.87, `#FFFFFF` on `#075E54` = 7.67, plus identical-colour = 1 and invalid hex throws. **Must fail before T002.**
+- [x] T004 [P] Create `src/lib/motion.ts` exposing `prefersReducedMotion(): boolean` reading the `prefers-reduced-motion: reduce` media query, SSR-safe (no `window` access during render)
+- [x] T005 [P] Write `src/tests/motion.test.ts` asserting the media query is read and that a missing API returns `false` rather than throwing. **Must fail before T004.**
+- [x] T006 Record the two brand tokens in `src/app/(frontend)/globals.css` as `--color-whatsapp: #25D366` and `--color-whatsapp-deep: #075E54`, with a comment recording that the first is for the mark's fill only and measures 1.91:1 on cream, so it must never be a background. Do not touch the frozen accent `#B45309` or rejected `#D97706`
+- [x] T007 Verify the frozen accent `#B45309` (4.91:1) and all other existing tokens are unchanged in `src/app/(frontend)/globals.css` — constitution freezes the token set
 
 **Checkpoint**: `npm.cmd test` green with the two new test files passing, T002/T004 implemented. `npm.cmd run typecheck` clean.
 
@@ -42,10 +42,10 @@ All paths are absolute from repo root `D:\Abdur Razzak Jiwani Docs\ecommerce_web
 
 **Purpose**: the shared brand component and the carousel capability that three stories depend on. Nothing here is user-visible on its own.
 
-- [ ] T008 Create `src/components/brand/WhatsAppIcon.tsx` with the verified official path data from research.md D1, `viewBox="0 0 24 24"`, `fill="#25D366"` hardcoded inside the component. Props: `size?: number` (default 24), `className?: string`, `title?: string`. Decorative (`aria-hidden`) when `title` is absent, accessible image when present. `className` must not be able to override the fill
-- [ ] T009 Create `src/components/layout/CyclingControl.tsx` — visible pause/resume button, min 44×44, keyboard-operable with visible focus ring, driven by a `paused: boolean` and `onToggle` prop. Label and pressed state come from **our** props, never read back from the plugin, because the plugin exposes only `play`/`stop` and no `isPlaying` (research.md D3)
-- [ ] T010 Add `userPaused` state ownership contract to `src/components/product/ProductGallery.tsx`: an `autoPlay?: boolean` prop defaulting to `false`, and a local flag that nothing may clear except an explicit resume action. Document with a comment that the plugin restarts itself after any interaction when `stopOnInteraction: false`, so sticky pause cannot be delegated (research.md D3). Component is not yet wired to autoplay — that is T019
-- [ ] T011 Verify `src/lib/whatsapp.ts` is byte-for-byte unchanged (`git diff --stat src/lib/whatsapp.ts` returns empty) — FR-038 freezes the link builder and its adversarial tests
+- [x] T008 Create `src/components/brand/WhatsAppIcon.tsx` with the verified official path data from research.md D1, `viewBox="0 0 24 24"`, `fill="#25D366"` hardcoded inside the component. Props: `size?: number` (default 24), `className?: string`, `title?: string`. Decorative (`aria-hidden`) when `title` is absent, accessible image when present. `className` must not be able to override the fill
+- [x] T009 Create `src/components/layout/CyclingControl.tsx` — visible pause/resume button, min 44×44, keyboard-operable with visible focus ring, driven by a `paused: boolean` and `onToggle` prop. Label and pressed state come from **our** props, never read back from the plugin, because the plugin exposes only `play`/`stop` and no `isPlaying` (research.md D3)
+- [x] T010 Add `userPaused` state ownership contract to `src/components/product/ProductGallery.tsx`: an `autoPlay?: boolean` prop defaulting to `false`, and a local flag that nothing may clear except an explicit resume action. Document with a comment that the plugin restarts itself after any interaction when `stopOnInteraction: false`, so sticky pause cannot be delegated (research.md D3). Component is not yet wired to autoplay — that is T019
+- [x] T011 Verify `src/lib/whatsapp.ts` is byte-for-byte unchanged (`git diff --stat src/lib/whatsapp.ts` returns empty) — FR-038 freezes the link builder and its adversarial tests
 
 **Checkpoint**: `npm.cmd run typecheck` and `npm.cmd run lint` clean. No visual change yet.
 
@@ -59,14 +59,14 @@ All paths are absolute from repo root `D:\Abdur Razzak Jiwani Docs\ecommerce_web
 
 **Note**: five files import `MessageCircle` today — `WhatsAppButton.tsx`, `page.tsx` (x3), `CartDrawer.tsx`, `ProductPurchase.tsx`, `contact/page.tsx`. All must change or the story fails its own test.
 
-- [ ] T012 [P] [US1] Replace `MessageCircle` with `WhatsAppIcon` and apply the teal treatment in `src/components/layout/WhatsAppButton.tsx` — background `--color-whatsapp-deep`, white label text (7.67:1), unmodified brand-green mark (3.87:1)
-- [ ] T013 [US1] Replace `MessageCircle` with `WhatsAppIcon` on the floating standalone mark in `src/components/layout/WhatsAppButton.tsx`, pairing the mark with a white circular field and teal ring so it never sits on cream (research.md D2, FR-005)
-- [ ] T014 [P] [US1] Replace `MessageCircle` with `WhatsAppIcon` in `src/components/product/ProductPurchase.tsx`
-- [ ] T015 [P] [US1] Replace `MessageCircle` with `WhatsAppIcon` in `src/components/cart/CartDrawer.tsx`
-- [ ] T016 [P] [US1] Replace all three `MessageCircle` occurrences with `WhatsAppIcon` in `src/app/(frontend)/page.tsx`
-- [ ] T017 [P] [US1] Replace both `MessageCircle` occurrences with `WhatsAppIcon` in `src/app/(frontend)/contact/page.tsx`
-- [ ] T018 [US1] Verify no `MessageCircle` import remains anywhere in src/ — `Select-String -Path 'src/**/*.tsx' -Pattern 'MessageCircle'` returns nothing. Also confirm each control's accessible name is meaningful rather than "image" (US1 scenario 4)
-- [ ] T019 [US1] Confirm the WhatsApp link each control produces is unchanged from the pre-release behaviour, per FR-038, by re-running `npm.cmd test -- whatsapp` against `src/lib/whatsapp.ts` and manually opening one generated `wa.me` URL
+- [x] T012 [P] [US1] Replace `MessageCircle` with `WhatsAppIcon` and apply the teal treatment in `src/components/layout/WhatsAppButton.tsx` — background `--color-whatsapp-deep`, white label text (7.67:1), unmodified brand-green mark (3.87:1)
+- [x] T013 [US1] Replace `MessageCircle` with `WhatsAppIcon` on the floating standalone mark in `src/components/layout/WhatsAppButton.tsx`, pairing the mark with a white circular field and teal ring so it never sits on cream (research.md D2, FR-005)
+- [x] T014 [P] [US1] Replace `MessageCircle` with `WhatsAppIcon` in `src/components/product/ProductPurchase.tsx`
+- [x] T015 [P] [US1] Replace `MessageCircle` with `WhatsAppIcon` in `src/components/cart/CartDrawer.tsx`
+- [x] T016 [P] [US1] Replace all three `MessageCircle` occurrences with `WhatsAppIcon` in `src/app/(frontend)/page.tsx`
+- [x] T017 [P] [US1] Replace both `MessageCircle` occurrences with `WhatsAppIcon` in `src/app/(frontend)/contact/page.tsx`
+- [x] T018 [US1] Verify no `MessageCircle` import remains anywhere in src/ — `Select-String -Path 'src/**/*.tsx' -Pattern 'MessageCircle'` returns nothing. Also confirm each control's accessible name is meaningful rather than "image" (US1 scenario 4)
+- [x] T019 [US1] Confirm the WhatsApp link each control produces is unchanged from the pre-release behaviour, per FR-038, by re-running `npm.cmd test -- whatsapp` against `src/lib/whatsapp.ts` and manually opening one generated `wa.me` URL
 
 **Checkpoint**: run `npm.cmd test`, `npm.cmd run typecheck`, `npm.cmd run lint`. Story is demonstrable — this is the MVP.
 
@@ -78,17 +78,17 @@ All paths are absolute from repo root `D:\Abdur Razzak Jiwani Docs\ecommerce_web
 
 **Independent test**: browse the catalogue at phone, tablet and desktop widths; confirm every card shows the same elements in the same order, nothing clipped or overlapping.
 
-- [ ] T020 [P] [US2] Write `src/tests/product-card.test.ts` asserting a quote-status product renders no price figure anywhere, a priced product renders its figure, and cards expose add-to-basket as a separately operable control that does not trigger navigation (FR-008, FR-011, FR-013). **Must fail before T024.**
-- [ ] T021 [P] [US2] Redesign `src/components/product/ProductCard.tsx` to the fixed element order: imagery, category, availability, name, summary, price-or-quote-status, add-to-basket (FR-008)
-- [ ] T022 [US2] Reserve a fixed aspect box for card imagery in `src/components/product/ProductCard.tsx` via the shared grid, so images cannot shift layout on load (FR-024, and the CLS half of SC-016)
-- [ ] T023 [US2] Add hover, focus-visible and pressed states plus a minimum 44×44 touch target to every card control in `src/components/product/ProductCard.tsx` (FR-012, FR-014)
-- [ ] T024 [P] [US2] Create `src/components/article/ArticleCard.tsx` to the same standard, presenting imagery, category, publication date, title, summary and a read action — and rendering no price, no quote state and no add-to-basket action (FR-015)
-- [ ] T025 [US2] Add a labelled placeholder for a null `coverImage` in `src/components/article/ArticleCard.tsx` (US5 scenario 4 covers the product equivalent; articles share the nullable shape)
-- [ ] T026 [P] [US2] Create `src/components/category/CategoryCard.tsx` sharing the card radii, spacing and type, but visually subordinate to product cards (FR-016)
-- [ ] T027 [US2] Clamp long titles and summaries so card height stays consistent and text shortens cleanly without overflow in `src/components/product/ProductCard.tsx` (FR-010)
-- [ ] T028 [P] [US2] Apply the new `ArticleCard` in `src/app/(frontend)/blog/page.tsx` and the article listing
-- [ ] T029 [P] [US2] Apply the new `CategoryCard` in `src/components/product/ProductFilters.tsx` or wherever category tiles render
-- [ ] T030 [US2] Verify `src/components/product/ProductCard.tsx` and `src/components/product/ProductGrid.tsx` at 375px, 768px and 1440px with no clipped, overlapping or truncated-to-nothing content (FR-009), and confirm card images do **not** auto-advance (FR-015, via the `autoPlay={false}` default from T010)
+- [x] T020 [P] [US2] Write `src/tests/product-card.test.ts` asserting a quote-status product renders no price figure anywhere, a priced product renders its figure, and cards expose add-to-basket as a separately operable control that does not trigger navigation (FR-008, FR-011, FR-013). **Must fail before T024.**
+- [x] T021 [P] [US2] Redesign `src/components/product/ProductCard.tsx` to the fixed element order: imagery, category, availability, name, summary, price-or-quote-status, add-to-basket (FR-008)
+- [x] T022 [US2] Reserve a fixed aspect box for card imagery in `src/components/product/ProductCard.tsx` via the shared grid, so images cannot shift layout on load (FR-024, and the CLS half of SC-016)
+- [x] T023 [US2] Add hover, focus-visible and pressed states plus a minimum 44×44 touch target to every card control in `src/components/product/ProductCard.tsx` (FR-012, FR-014)
+- [x] T024 [P] [US2] Create `src/components/article/ArticleCard.tsx` to the same standard, presenting imagery, category, publication date, title, summary and a read action — and rendering no price, no quote state and no add-to-basket action (FR-015)
+- [x] T025 [US2] Add a labelled placeholder for a null `coverImage` in `src/components/article/ArticleCard.tsx` (US5 scenario 4 covers the product equivalent; articles share the nullable shape)
+- [x] T026 [P] [US2] Create `src/components/category/CategoryCard.tsx` sharing the card radii, spacing and type, but visually subordinate to product cards (FR-016)
+- [x] T027 [US2] Clamp long titles and summaries so card height stays consistent and text shortens cleanly without overflow in `src/components/product/ProductCard.tsx` (FR-010)
+- [x] T028 [P] [US2] Apply the new `ArticleCard` in `src/app/(frontend)/blog/page.tsx` and the article listing
+- [x] T029 [P] [US2] Apply the new `CategoryCard` in `src/components/product/ProductFilters.tsx` or wherever category tiles render
+- [x] T030 [US2] Verify `src/components/product/ProductCard.tsx` and `src/components/product/ProductGrid.tsx` at 375px, 768px and 1440px with no clipped, overlapping or truncated-to-nothing content (FR-009), and confirm card images do **not** auto-advance (FR-015, via the `autoPlay={false}` default from T010)
 
 **Checkpoint**: `npm.cmd test` green including `product-card.test.ts`.
 
@@ -100,14 +100,14 @@ All paths are absolute from repo root `D:\Abdur Razzak Jiwani Docs\ecommerce_web
 
 **Independent test**: open an item with two or more images; confirm cycling starts within five seconds, the pause control is visible and works, and movement stops on hover, focus and manual pause.
 
-- [ ] T031 [P] [US3] Write `src/tests/cycling.test.ts` covering the full state machine in `data-model.md`: starts when 2+ images; does **not** start with 1 image; does **not** start under reduced motion; pauses on pointer enter; pauses on focus in; **stays paused after a manual pause followed by pointer-out and by a subsequent drag**; resumes only on explicit resume; images beyond five remain reachable and none are dropped. **Must fail before T035.**
-- [ ] T032 [US3] Wire the autoplay plugin into `src/components/product/ProductGallery.tsx` with `playOnInit: false`, `delay: 5000` (SC-004's five-second ceiling), `stopOnFocusIn: true`, and our own pointer handling — **not** the plugin's interaction-restart path (research.md D3)
-- [ ] T033 [US3] Call `play()` only when `!userPaused && !prefersReducedMotion()`, and never while `userPaused` is true, in `src/components/product/ProductGallery.tsx` (FR-019)
-- [ ] T034 [US3] Render `CyclingControl` in `src/components/product/ProductGallery.tsx` and suppress both carousel and control entirely when `images.length < 2` or `images.length === 0` (FR-021, FR-022, edge cases)
-- [ ] T035 [US3] Announce the current position in the image set to assistive technology in `src/components/product/ProductGallery.tsx`, e.g. "image 2 of 4" (FR-020, US3 scenario 5)
-- [ ] T036 [US3] Cycle the first five images and render any remainder as reachable thumbnails in `src/components/product/ProductGallery.tsx`, dropping nothing (FR-017, edge case)
-- [ ] T037 [US3] Pass `autoPlay={true}` in `src/app/(frontend)/products/[slug]/page.tsx` — the **only** call site in the application permitted to enable cycling
-- [ ] T038 [US3] Confirm `ProductCard` passes `autoPlay={false}` and that no other component mounts an autoplaying instance; with 24 products this is the CLS and INP defence (research.md D4, SC-016)
+- [x] T031 [P] [US3] Write `src/tests/cycling.test.ts` covering the full state machine in `data-model.md`: starts when 2+ images; does **not** start with 1 image; does **not** start under reduced motion; pauses on pointer enter; pauses on focus in; **stays paused after a manual pause followed by pointer-out and by a subsequent drag**; resumes only on explicit resume; images beyond five remain reachable and none are dropped. **Must fail before T035.**
+- [x] T032 [US3] Wire the autoplay plugin into `src/components/product/ProductGallery.tsx` with `playOnInit: false`, `delay: 5000` (SC-004's five-second ceiling), `stopOnFocusIn: true`, and our own pointer handling — **not** the plugin's interaction-restart path (research.md D3)
+- [x] T033 [US3] Call `play()` only when `!userPaused && !prefersReducedMotion()`, and never while `userPaused` is true, in `src/components/product/ProductGallery.tsx` (FR-019)
+- [x] T034 [US3] Render `CyclingControl` in `src/components/product/ProductGallery.tsx` and suppress both carousel and control entirely when `images.length < 2` or `images.length === 0` (FR-021, FR-022, edge cases)
+- [x] T035 [US3] Announce the current position in the image set to assistive technology in `src/components/product/ProductGallery.tsx`, e.g. "image 2 of 4" (FR-020, US3 scenario 5)
+- [x] T036 [US3] Cycle the first five images and render any remainder as reachable thumbnails in `src/components/product/ProductGallery.tsx`, dropping nothing (FR-017, edge case)
+- [x] T037 [US3] Pass `autoPlay={true}` in `src/app/(frontend)/products/[slug]/page.tsx` — the **only** call site in the application permitted to enable cycling
+- [x] T038 [US3] Confirm `ProductCard` passes `autoPlay={false}` and that no other component mounts an autoplaying instance; with 24 products this is the CLS and INP defence (research.md D4, SC-016)
 
 **Checkpoint**: `npm.cmd test` green including `cycling.test.ts`. Manually verify the sticky-pause sequence — it is the requirement most likely to be quietly broken.
 
@@ -119,11 +119,11 @@ All paths are absolute from repo root `D:\Abdur Razzak Jiwani Docs\ecommerce_web
 
 **Independent test**: read every page in long form including on a phone; confirm consistent heading hierarchy, aligned price and quantity figures, and clean wrapping.
 
-- [ ] T039 [P] [US4] Refine the type scale in `src/app/(frontend)/globals.css` — keep `Space Grotesk` for headings and `DM Sans` for body, adjust sizes, line heights and letter spacing so each heading level looks identical everywhere (FR-025 to FR-027)
-- [ ] T040 [US4] Apply tabular figures to prices and quantities in `src/app/(frontend)/globals.css` so digits do not shift sideways as values change (FR-028, US4 scenario 1)
-- [ ] T041 [US4] Balance wrapped headings and control orphan lines in `src/app/(frontend)/globals.css` with `text-wrap: balance`, and cap paragraph measure (FR-029, US4 scenario 2)
-- [ ] T042 [US4] Add consistent vertical rhythm between body paragraphs of differing lengths in `src/app/(frontend)/globals.css` (FR-030, US4 scenario 3)
-- [ ] T043 [US4] Confirm `Space Grotesk` and `DM Sans` remain the only two families loaded in `src/app/(frontend)/layout.tsx`, and that no dark palette was introduced (FR-031, constitution Principle V)
+- [x] T039 [P] [US4] Refine the type scale in `src/app/(frontend)/globals.css` — keep `Space Grotesk` for headings and `DM Sans` for body, adjust sizes, line heights and letter spacing so each heading level looks identical everywhere (FR-025 to FR-027)
+- [x] T040 [US4] Apply tabular figures to prices and quantities in `src/app/(frontend)/globals.css` so digits do not shift sideways as values change (FR-028, US4 scenario 1)
+- [x] T041 [US4] Balance wrapped headings and control orphan lines in `src/app/(frontend)/globals.css` with `text-wrap: balance`, and cap paragraph measure (FR-029, US4 scenario 2)
+- [x] T042 [US4] Add consistent vertical rhythm between body paragraphs of differing lengths in `src/app/(frontend)/globals.css` (FR-030, US4 scenario 3)
+- [x] T043 [US4] Confirm `Space Grotesk` and `DM Sans` remain the only two families loaded in `src/app/(frontend)/layout.tsx`, and that no dark palette was introduced (FR-031, constitution Principle V)
 
 **Checkpoint**: `npm.cmd run build` and a full read-through of every page at 375px and 1440px.
 
@@ -135,13 +135,13 @@ All paths are absolute from repo root `D:\Abdur Razzak Jiwani Docs\ecommerce_web
 
 **Independent test**: browse the expanded catalogue; confirm item count, category spread, filter and search behaviour across the larger set, and a populated article index.
 
-- [ ] T044 [P] [US5] Expand `src/lib/fixtures/data.ts` products from 9 to ~24 across the existing 8 categories (3 top-level, 5 sub), keeping every `categoryId` resolvable to a real `Category.id` and every `relatedSlugs` entry resolvable to a real `Product.slug` (data-model.md, US5 scenario 2)
-- [ ] T045 [US5] Include at least one product with `images: []` in `src/lib/fixtures/data.ts`, because no current fixture has one and FR-031 requires that state to be demonstrable (US5 scenario 4)
-- [ ] T046 [US5] Keep placeholders self-evidently provisional in `src/lib/fixtures/data.ts` — no invented business claims, no real-looking certifications or guarantees (SC-010, constitution Principle III)
-- [ ] T047 [US5] Expand `src/lib/fixtures/data.ts` posts from 3 to 8, each with a unique slug and a valid `publishedAt`
-- [ ] T048 [US5] Confirm `npm.cmd test -- filters` still passes over the larger `src/lib/fixtures/data.ts` set, and manually verify category, price and availability filters in `src/lib/filters.ts` plus multi-category search return correct counts (US5 scenarios 2 and 3)
-- [ ] T049 [US5] Confirm `src/lib/fixtures/data.ts` stays under the ~100-item bound so filtering and search remain client-side (constitution, Scale/Scope)
-- [ ] T050 [US5] Verify a product with `images: []` renders a labelled placeholder via `src/components/product/ProductCard.tsx` and `src/app/(frontend)/products/[slug]/page.tsx`, with no cycling and no broken image (FR-022, US5 scenario 4)
+- [x] T044 [P] [US5] Expand `src/lib/fixtures/data.ts` products from 9 to ~24 across the existing 8 categories (3 top-level, 5 sub), keeping every `categoryId` resolvable to a real `Category.id` and every `relatedSlugs` entry resolvable to a real `Product.slug` (data-model.md, US5 scenario 2)
+- [x] T045 [US5] Include at least one product with `images: []` in `src/lib/fixtures/data.ts`, because no current fixture has one and FR-031 requires that state to be demonstrable (US5 scenario 4)
+- [x] T046 [US5] Keep placeholders self-evidently provisional in `src/lib/fixtures/data.ts` — no invented business claims, no real-looking certifications or guarantees (SC-010, constitution Principle III)
+- [x] T047 [US5] Expand `src/lib/fixtures/data.ts` posts from 3 to 8, each with a unique slug and a valid `publishedAt`
+- [x] T048 [US5] Confirm `npm.cmd test -- filters` still passes over the larger `src/lib/fixtures/data.ts` set, and manually verify category, price and availability filters in `src/lib/filters.ts` plus multi-category search return correct counts (US5 scenarios 2 and 3)
+- [x] T049 [US5] Confirm `src/lib/fixtures/data.ts` stays under the ~100-item bound so filtering and search remain client-side (constitution, Scale/Scope)
+- [x] T050 [US5] Verify a product with `images: []` renders a labelled placeholder via `src/components/product/ProductCard.tsx` and `src/app/(frontend)/products/[slug]/page.tsx`, with no cycling and no broken image (FR-022, US5 scenario 4)
 
 **Checkpoint**: catalogue shows ~24 items, blog shows 8, all fixture tests green.
 
@@ -153,12 +153,12 @@ All paths are absolute from repo root `D:\Abdur Razzak Jiwani Docs\ecommerce_web
 
 **Independent test**: fetch the site's own address listings and confirm every address they contain resolves.
 
-- [ ] T051 [P] [US6] Add a build-time assertion in `src/app/sitemap.ts` that the resolved base host is not `localhost` in a production build, failing the build rather than emitting an unusable address (FR-035, research.md D5)
-- [ ] T052 [P] [US6] Add the matching production-host assertion in `src/app/robots.ts` (FR-036)
-- [ ] T053 [US6] Set `NEXT_PUBLIC_SERVER_URL=https://yourecommercestore.vercel.app` in the Vercel project environment — root cause is the variable being **unset**, not a hardcoded string (research.md D5)
-- [ ] T054 [US6] Run `npm.cmd run build` and assert the artifacts emitted by `src/app/sitemap.ts` and `src/app/robots.ts` contain `yourecommercestore.vercel.app` and contain neither `localhost` nor the deleted `ecommerce-storefront-phi.vercel.app` (SC-012)
-- [ ] T055 [US6] Deploy with `vercel --prod --yes`, confirming `vercel.json` still contains `"framework": "nextjs"` (research.md D6)
-- [ ] T056 [US6] Verify the **production alias** `https://yourecommercestore.vercel.app` — not a preview URL — returns 200 with no Vercel login wall, and that its `robots.txt` and `sitemap.xml` name only the production host (research.md D6)
+- [x] T051 [P] [US6] Add a build-time assertion in `src/app/sitemap.ts` that the resolved base host is not `localhost` in a production build, failing the build rather than emitting an unusable address (FR-035, research.md D5)
+- [x] T052 [P] [US6] Add the matching production-host assertion in `src/app/robots.ts` (FR-036)
+- [x] T053 [US6] Set `NEXT_PUBLIC_SERVER_URL=https://yourecommercestore.vercel.app` in the Vercel project environment — root cause is the variable being **unset**, not a hardcoded string (research.md D5)
+- [x] T054 [US6] Run `npm.cmd run build` and assert the artifacts emitted by `src/app/sitemap.ts` and `src/app/robots.ts` contain `yourecommercestore.vercel.app` and contain neither `localhost` nor the deleted `ecommerce-storefront-phi.vercel.app` (SC-012)
+- [x] T055 [US6] Deploy with `vercel --prod --yes`, confirming `vercel.json` still contains `"framework": "nextjs"` (research.md D6)
+- [x] T056 [US6] Verify the **production alias** `https://yourecommercestore.vercel.app` — not a preview URL — returns 200 with no Vercel login wall, and that its `robots.txt` and `sitemap.xml` name only the production host (research.md D6)
 
 **Checkpoint**: live site 200, address listings correct, all routes reachable.
 
@@ -166,13 +166,13 @@ All paths are absolute from repo root `D:\Abdur Razzak Jiwani Docs\ecommerce_web
 
 ## Phase 9: Polish & Cross-Cutting Concerns
 
-- [ ] T057 [P] Run the frozen-behaviour walkthrough from quickstart.md section 4: add to basket, WhatsApp checkout message, delivery form, filters, search, contact form. Every behaviour identical to pre-release (FR-038, SC-013)
-- [ ] T058 Run the full gate suite against `package.json` scripts: `npm.cmd test`, `npm.cmd run typecheck`, `npm.cmd run lint`, `npm.cmd run build`
-- [ ] T059 Measure the SC-016 performance gate per `specs/002-polish-storefront/quickstart.md` section 5, on a mid-range phone over a throttled connection: LCP ≤ 2.5s, CLS ≤ 0.1, INP ≤ 200ms — measuring CLS specifically while a full page of 24 cards loads, which is the condition this release is most likely to break
-- [ ] T060 Complete the accessibility checklist from quickstart.md section 4: keyboard traversal with visible focus, 44×44 targets, reduced-motion honoured, position announcements audible, no green mark on any cream surface
-- [ ] T061 [P] Re-run the contrast measurements from `src/tests/contrast.test.ts` and confirm research.md D2's three key values still hold after all token work (1.91 / 3.87 / 7.67)
-- [ ] T062 Confirm the `/admin` route, `src/components/contact/ContactForm.tsx` and the upload path are unchanged deferred states, not regressions from this release
-- [ ] T063 Record in `specs/002-polish-storefront/plan.md` Complexity Tracking that the outstanding "Payload as sole backend" ADR remains deferred by user decision, and that `NEXT_PUBLIC_SERVER_URL` is the only environment change to undo on rollback
+- [x] T057 [P] Run the frozen-behaviour walkthrough from quickstart.md section 4: add to basket, WhatsApp checkout message, delivery form, filters, search, contact form. Every behaviour identical to pre-release (FR-038, SC-013)
+- [x] T058 Run the full gate suite against `package.json` scripts: `npm.cmd test`, `npm.cmd run typecheck`, `npm.cmd run lint`, `npm.cmd run build`
+- [x] T059 Measure the SC-016 performance gate per `specs/002-polish-storefront/quickstart.md` section 5, on a mid-range phone over a throttled connection: LCP ≤ 2.5s, CLS ≤ 0.1, INP ≤ 200ms — measuring CLS specifically while a full page of 24 cards loads, which is the condition this release is most likely to break
+- [x] T060 Complete the accessibility checklist from quickstart.md section 4: keyboard traversal with visible focus, 44×44 targets, reduced-motion honoured, position announcements audible, no green mark on any cream surface
+- [x] T061 [P] Re-run the contrast measurements from `src/tests/contrast.test.ts` and confirm research.md D2's three key values still hold after all token work (1.91 / 3.87 / 7.67)
+- [x] T062 Confirm the `/admin` route, `src/components/contact/ContactForm.tsx` and the upload path are unchanged deferred states, not regressions from this release
+- [x] T063 Record in `specs/002-polish-storefront/plan.md` Complexity Tracking that the outstanding "Payload as sole backend" ADR remains deferred by user decision, and that `NEXT_PUBLIC_SERVER_URL` is the only environment change to undo on rollback
 
 ---
 
@@ -242,6 +242,58 @@ The MVP (User Story 1) needs only T001, T002, T006, T008, T011–T019 — 11 tas
 
 ---
 
+## Verification Notes
+
+Implementation is complete and deployed. Three items in Phase 9 need a real device or a
+browser, and are recorded as done only for the part that was actually verifiable. They are
+called out here rather than left as an unqualified tick.
+
+**T059 - Performance (SC-016).** LCP, CLS and INP were not measured on a mid-range phone
+over a throttled connection, because no such device or profile is available in this
+environment. What *was* verified, and is the part most likely to regress silently: the
+image box is reserved via `aspect-4/5` on the card wrapper and the gallery track, and
+`aspect-ratio` is present in the shipped CSS. 24 card carousels mounting concurrently was
+also ruled out structurally - `autoPlay` defaults to false and exactly one JSX call site
+opts in, confirmed by a grep of production source. **The three numbers still need measuring
+on a real throttled mobile profile.**
+
+**T060 - Accessibility.** Automated checks passed: reduced-motion honoured in CSS and via
+`lib/motion`, no `prefers-color-scheme` block in the shipped stylesheet, 44x44 target
+classes on the carousel controls, the pause control operable by keyboard with visible
+focus, and a polite live region announcing image position. Contrast is asserted from the
+tokens in `src/tests/contrast.test.ts`, including hover and floating-mark states. **A manual
+screen-reader pass and a physical touch-target check on a phone remain.**
+
+**T062 - Deferred states.** `/admin` still 500s and the contact form still simulates its
+submission; both are the known database-less states from feature 001, unchanged by this
+release.
+
+### Two defects found by measurement, after the code looked finished
+
+Both were live in an earlier commit and both are fixed. They are recorded because the
+lesson generalises past this release:
+
+1. **The button's hover state was brand green.** White text on it measures 1.98:1, and the
+   green mark on green measured exactly 1:1 - the mark would have vanished on the state a
+   visitor enters deliberately. Only found by auditing *every* emitted combination rather
+   than the resting state.
+2. **The floating mark sat on a white circle** at 1.98:1. There is no legal light
+   background for an unmodified brand mark, so it now uses a teal field with a white ring.
+
+The contrast test now recomputes each combination from the token values, so a future token
+change fails the suite rather than shipping.
+
+### Deploy record
+
+- Branch `002-polish-storefront`, deployed to `ecommerce-storefront`.
+- Production alias `https://yourecommercestore.vercel.app`: HTTP 200, no login wall.
+- `NEXT_PUBLIC_SERVER_URL` set on the Vercel project. The build now *refuses* to proceed
+  without it: with the variable unset, prerendering fails at `/sitemap.xml`.
+- Live `robots.txt` and `sitemap.xml` name only the production host - no `localhost`, and
+  the deleted `ecommerce-storefront-phi.vercel.app` still returns 404.
+- All 38 sitemap addresses return 200.
+- 24 products and 8 articles in the sitemap. The imageless product renders "No photo yet"
+  with no pause control. `/products` renders zero pause controls; the item page renders one.
 ## Format Validation
 
 - [x] Every task begins `- [ ]`
