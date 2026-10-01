@@ -19,6 +19,11 @@ $foregrounds = @('#44403C', '#1C1917', '#57534E', '#3F3B36')
 $accents     = @('#B45309', '#92400E', '#C67B5C', '#A16207')
 
 # slug, label, frame count
+#
+# Expanded 2026-10-01 for feature 002, alongside the catalogue growth from 9 to 27
+# products. Each new product needs its own image set, otherwise its card renders a
+# broken frame - which is the exact failure the imageless-product requirement is
+# meant to make visible in only one deliberate place.
 $items = @(
   @{ slug = 'laptop';      label = 'Business Laptop';   frames = 4 },
   @{ slug = 'ultrabook';   label = 'Ultrabook';         frames = 3 },
@@ -28,7 +33,15 @@ $items = @(
   @{ slug = 'accounting';  label = 'Accounting';        frames = 3 },
   @{ slug = 'network';     label = 'Network Install';   frames = 4 },
   @{ slug = 'support';     label = 'Maintenance';       frames = 3 },
-  @{ slug = 'recovery';    label = 'Data Recovery';     frames = 2 }
+  @{ slug = 'recovery';    label = 'Data Recovery';     frames = 2 },
+  @{ slug = 'desktop';     label = 'Desktop';           frames = 3 },
+  @{ slug = 'keyboard';    label = 'Keyboard';          frames = 2 },
+  @{ slug = 'ssd';         label = 'External SSD';      frames = 3 },
+  @{ slug = 'webcam';      label = 'Webcam';            frames = 2 },
+  @{ slug = 'security';    label = 'Security';          frames = 2 },
+  @{ slug = 'email';       label = 'Business Email';    frames = 3 },
+  @{ slug = 'server';      label = 'Server Install';    frames = 3 },
+  @{ slug = 'backup';      label = 'Managed Backup';    frames = 2 }
 )
 
 $width  = 800
